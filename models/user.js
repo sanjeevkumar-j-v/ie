@@ -7,6 +7,12 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    userid: {
+      // Student Admission number or Faculty ID
+      type: String,
+      required: true,
+      unique: true,
+    },
     password: {
       type: String,
       required: true,
@@ -22,8 +28,26 @@ const userSchema = new mongoose.Schema(
     address: {
       type: String,
     },
-    isAdmin: {
-      type: Boolean,
+    role: {
+      type: String,
+      required: true,
+      default: "student"
+    },
+    // for student role
+    roll_number: {
+      type: String,
+      unique: true
+    },
+    batch: {
+      type: String,
+    },
+    program: {
+      // Department & course
+      type: String,
+    },
+    // for faculty role
+    designation: {
+      type: String,
     },
   },
   {
