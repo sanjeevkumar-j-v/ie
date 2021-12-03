@@ -5,13 +5,12 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
     },
     userid: {
       // Student Admission number or Faculty ID
       type: String,
       required: true,
-      unique: true,
+      unique: true
     },
     password: {
       type: String,
@@ -23,20 +22,16 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: Number,
-      required: true,
     },
     address: {
       type: String,
     },
     role: {
       type: String,
-      required: true,
-      default: "student"
     },
     // for student role
     roll_number: {
       type: String,
-      unique: true
     },
     batch: {
       type: String,
