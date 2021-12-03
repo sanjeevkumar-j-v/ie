@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 
 const collegeSchema = new mongoose.Schema(
   {
-    name: {
+    collegename: {
       type: String,
       required: true,
       unique: true
     },
-    address: {
+    collegeaddress: {
       type: String,
     },
   }

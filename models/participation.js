@@ -7,14 +7,26 @@ const participationSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    eventId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Event",
-      required: true,
-    },
     collegeId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "College",
+      required: true,
+    },
+    // eventId: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Event",
+    //   required: true,
+    // },
+    eventname: {
+      type: String,
+      required: true,
+    },
+    eventtype: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
       required: true,
     },
     fromDate: {
