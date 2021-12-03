@@ -55,7 +55,30 @@ passport.checkAuthentication = function(req, res, next){
     // if user is not signed in
     return res.redirect('/users/sign-in');
 }
-
+passport.checkFaculty = function(req, res, next){
+    // If user is signed in, then pass on the request to next function (controller's action)
+    if(req.isAuthenticated()){
+        // check faculty?
+        if (req.user.role == "faculty") {
+            return next();
+        }
+        return res.redirect('/student');
+    }
+    // if user is not signed in
+    return res.redirect('/users/sign-in');
+}
+passport.checkStudent = function(req, res, next){
+    // If user is signed in, then pass on the request to next function (controller's action)
+    if(req.isAuthenticated()){
+        // check student?
+        if (req.user.role == "student") {
+            return next();
+        }
+        return res.redirect('/faculty');
+    }
+    // if user is not signed in
+    return res.redirect('/users/sign-in');
+}
 passport.setAuthenticatedUser = function(req, res, next){
     if(req.isAuthenticated()){
         // req.user contains current signed in user from session cookie and we just sending this to locals
