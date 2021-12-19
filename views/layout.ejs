@@ -7,8 +7,13 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <%- style %>
 </head>
-<body>
-    <%- body %>
+<body class="flex-center">
+    <section id="main-logo" class="flex-center">
+        <img src="/images/mainlogo.svg" alt="">
+    </section>
+    <section id="all-content" class="flex-center ">
+        <%- body %>
+    </section>
     <%- script %>
 </body>
 </html>
