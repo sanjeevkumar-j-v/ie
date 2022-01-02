@@ -69,8 +69,8 @@ table td {
   float: right;
 }
 .pagination-container {
-  width: 70%;
-  float: left;
+  width: 100%;
+  /* float: left; */
 }
 .rows_count {
   width: 30%;

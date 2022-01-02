@@ -5,7 +5,10 @@ var User = require("../models/user");
 var College = require("../models/college");
 
 router.get("/", async function (req, res) {
-  var participations = await Participation.find({}).sort({ createdAt: -1 });
+  var participations = await Participation.find({}).sort({
+    dates: 1,
+    createdAt: 1,
+  });
   var allRequests = [];
   for (i in participations) {
     var request = {};
@@ -15,8 +18,7 @@ router.get("/", async function (req, res) {
     request.eventname = participations[i].eventname;
     request.eventtype = participations[i].eventtype;
     request.description = participations[i].description;
-    request.fromDate = participations[i].fromDate;
-    request.toDate = participations[i].toDate;
+    request.dates = participations[i].dates;
     request.applicationStatus = participations[i].applicationStatus;
     request.proofOfParticipation = participations[i].proofOfParticipation;
 

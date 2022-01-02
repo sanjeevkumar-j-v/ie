@@ -125,12 +125,12 @@ form {
 }
 h1 {
   text-align: center;
-  font-size: 25px !important;
+  font-size: 20px !important;
   color: #babecc;
   text-shadow: 1px 1px 1px #fff;
 }
 form input {
-  margin: 5px;
+  margin: 8px;
   max-width: 300px;
 }
 .signing-form {
@@ -143,7 +143,7 @@ input {
   border: 0;
   outline: 0;
   font-size: 12px;
-  border-radius: 320px !important;
+  border-radius: 10px !important;
   padding: 16px;
   background-color: #f3f4f7;
   text-shadow: 1px 1px 0 #fff;

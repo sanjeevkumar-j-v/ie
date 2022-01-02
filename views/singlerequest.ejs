@@ -1,0 +1,45 @@
+<style>
+  #all-content {
+    width: 95%;
+    height: 80%;
+  }
+</style>
+
+<img id="blob1" src="/images/blob.svg" alt="." />
+<img id="blob2" src="/images/blob.svg" alt="." />
+
+<h1>Student Request</h1>
+<section class="faculty-view">
+  <div>
+    <!-- <th scope="row"><%= request.student.name %></th> -->
+    <p>STUDENT: <%= request.student %></p>
+    <p>COLLEGE: <%= request.college %></p>
+    <p>EVENT NAME:<%= request.eventname %></p>
+    <p>EVENT DATE:
+      <%= request.fromDate.getDate()+ "/" + (request.fromDate.getMonth()+1) +
+      "/" + request.fromDate.getFullYear() %> to <%= request.toDate.getDate()+
+      "/" + (request.toDate.getMonth()+1) + "/" + request.toDate.getFullYear()
+      %>
+    </p>
+    <p>APPROVAL STATUS:
+      <% if (request.applicationStatus == "pending") { %> <% } else if
+      (request.applicationStatus == "approved") { %>
+      <span class="green">Approved</span>
+      <% } else if (request.applicationStatus == "rejected") { %>
+      <span class="red">Rejected</span>
+      <% } %>
+    </p>
+    <% if (request.proofOfParticipation) { %>
+    <p class="green">PROOF: Uploaded - <%= request.participation %></p>
+    <% } else { %>
+    <p class="yellow">PROOF: Standby</p>
+    <% } %>
+    <p>EDIT APPROVAL: </p>
+    <a class="approval-btn approve" href="/faculty/approve/<%=request._id%>">
+      Approve
+    </a>
+    <a class="approval-btn reject" href="/faculty/reject/<%=request._id%>">
+      Reject
+    </a>
+  </div>
+</section>

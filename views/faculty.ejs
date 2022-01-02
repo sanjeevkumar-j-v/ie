@@ -60,9 +60,14 @@
         <td><%= i.college.collegename %></td>
         <td><%= i.eventname %></td>
         <td>
-          <%= i.fromDate.getDate()+ "/" + (i.fromDate.getMonth()+1) + "/" +
-          i.fromDate.getFullYear() %> to <%= i.toDate.getDate()+ "/" +
-          (i.toDate.getMonth()+1) + "/" + i.toDate.getFullYear() %>
+          <%= i.dates[0].getDate()+ "/" + (i.dates[0].getMonth()+1) + "/" +
+          i.dates[0].getFullYear() %> 
+          <% if (i.dates[1]) { %> , <%=
+          i.dates[1].getDate()+ "/" + (i.dates[1].getMonth()+1) + "/" +
+          i.dates[1].getFullYear() %> <% } %> 
+          <% if (i.dates[2]) { %> , <%=
+          i.dates[2].getDate()+ "/" + (i.dates[2].getMonth()+1) + "/" +
+          i.dates[2].getFullYear() %> <% } %>
         </td>
         <td>
           <% if (i.applicationStatus == "pending") { %>
@@ -90,10 +95,10 @@
     </tbody>
   </table>
 
-  <div class="pagination-container">
+  <div class="pagination-container flex-center">
     <nav>
       <ul class="pagination"></ul>
     </nav>
   </div>
-  <div class="rows_count">Showing 11 to 20 of 91 entries</div>
+  <!-- <div class="rows_count">Showing 11 to 20 of 91 entries</div> -->
 </section>

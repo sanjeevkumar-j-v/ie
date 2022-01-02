@@ -29,14 +29,11 @@ const participationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    fromDate: {
-      type: Date,
-      required: true,
-    },
-    toDate: {
-      type: Date,
-      required: true,
-    },
+    dates: [
+      {
+        type: Date,
+      },
+    ],
     applicationStatus: {
       type: String,
     },
