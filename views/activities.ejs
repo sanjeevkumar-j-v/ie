@@ -1,4 +1,84 @@
-<h1>Student Activities</h1>
-<% for (i of participations) { %>
-    <h6><%= i %></h6>
-<% } %>
+<link rel="stylesheet" href="/stylesheets/table.css" />
+
+<script src="/javascripts/table.js"></script>
+
+<h1>Your Requests</h1>
+<div class="header_wrap">
+    <div class="tb_search search-bar">
+        <input type="text" id="search_input_all" onkeyup="FilterkeyWord_all_table()" placeholder="Search.."
+            class="form-controls" />
+        <i class="fas fa-search"></i>
+    </div>
+</div>
+
+<table class="table table-responsive table-hover table-borderless" id="table-id">
+    <thead>
+        <tr>
+            <th scope="col">College Name</th>
+            <th scope="col">Event Name</th>
+            <th scope="col">Dates</th>
+            <th scope="col">Request Status</th>
+            <th scope="col">Proof</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for (i of participations) { %>
+        <tr>
+            <td><%= i.collegename %></td>
+            <td><%= i.eventname %></td>
+            <td>
+                <%= i.dates[0].getDate()+ "/" + (i.dates[0].getMonth()+1) + "/" +
+                    i.dates[0].getFullYear() %>
+                <% if (i.dates[1]) { %> , <%=
+                    i.dates[1].getDate()+ "/" + (i.dates[1].getMonth()+1) + "/" +
+                    i.dates[1].getFullYear() %> <% } %>
+                <% if (i.dates[2]) { %> , <%=
+                    i.dates[2].getDate()+ "/" + (i.dates[2].getMonth()+1) + "/" +
+                    i.dates[2].getFullYear() %> <% } %>
+            </td>
+            <td>
+                <% if (i.applicationStatus == "pending") { %>
+                Pending
+                <% } else if (i.applicationStatus == "approved") { %>
+                <span class="green">Approved</span>
+                <% } else if (i.applicationStatus == "rejected") { %>
+                <span class="red">Rejected</span>
+                <% } %>
+            </td>
+            <% if (i.applicationStatus == "approved") { %>
+            <% if (i.proofOfParticipation) { %>
+            <td class="green">Uploaded</td>
+            <% } else { %>
+            <td class="yellow">
+                <form action="/student/upload-proof/<%= i._id %>" method="post" enctype="multipart/form-data">
+                    <input class="upload-btn" id="upload-submit" style="display: none;" placeholder="submit"
+                        type="submit" />
+                    <label for="file-upload" class="upload-btn" id="file-upload-label">
+                        Upload Proof
+                    </label>
+                    <p id="file-name" style="display: none;"></p>
+                    <input class="upload" name="proofOfParticipation" type="file" id="file-upload" placeholder="Upload File" required
+                        onchange="getFilename(this)" />
+                </form>
+            </td>
+            <% } %>
+            <% } else { %>
+            <td>-</td>
+            <% } %>
+
+            <!-- <td><a href="/faculty/view/<%=i._id%>">More</a></td> -->
+        </tr>
+
+        <% } %>
+    </tbody>
+</table>
+
+<a href="/student/request-participation">Request For New Event</a>
+<script>
+    function getFilename(MyFile) {
+        document.getElementById("file-upload-label").style.display = "none";
+        document.getElementById("file-name").style.display = "block";
+        document.getElementById("upload-submit").style.display = "block";
+        document.getElementById("file-name").innerText = MyFile.files[0].name;
+    }
+</script>

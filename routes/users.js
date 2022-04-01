@@ -45,12 +45,14 @@ router.get("/sign-out", function (req, res) {
   return res.redirect("/");
 });
 
-// use passport as middleware to authenticate
 router.post(
   "/create-session",
+  // use passport as middleware to authenticate
   passport.authenticate("local", { failureRedirect: "/users/sign-in" }),
   function (req, res) {
-    return res.redirect("/users/profile");
+    // after login, redirect to faculty page by default
+    // if the user is student it will be automatically redirected to student page
+    return res.redirect('/faculty');
   }
 );
 

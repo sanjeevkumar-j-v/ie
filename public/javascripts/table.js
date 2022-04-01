@@ -137,8 +137,6 @@ function FilterkeyWord_all_table() {
         if (td) {
           var td_text = td.innerHTML;
           if (td.innerHTML.toLowerCase().indexOf(filter) > -1) {
-            //var td_text = td.innerHTML;
-            //td.innerHTML = 'shaban';
             flag = 1;
           } else {
             //DO NOTHING

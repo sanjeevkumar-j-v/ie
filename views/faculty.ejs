@@ -1,104 +1,92 @@
-<style>
-  #all-content {
-    width: 95%;
-    height: 95%;
-  }
-</style>
-
 <link rel="stylesheet" href="/stylesheets/table.css" />
 
 <script src="/javascripts/table.js"></script>
-<img id="blob1" src="/images/blob.svg" alt="." />
-<img id="blob2" src="/images/blob.svg" alt="." />
 
 <h1>Approval Page</h1>
-<section class="faculty-view">
-  <div class="header_wrap">
-    <div class="num_rows">
-      <div class="form-group">
-        <select class="form-controls" name="state" id="maxRows">
-          <option value="10">10</option>
-          <option value="15">15</option>
-          <option value="20">20</option>
-          <option value="50">50</option>
-          <option value="70">70</option>
-          <option value="100">100</option>
-          <option value="5000">Show All Rows</option>
-        </select>
-      </div>
-    </div>
-    <div class="tb_search">
-      <input
-        type="text"
-        id="search_input_all"
-        onkeyup="FilterkeyWord_all_table()"
-        placeholder="Search.."
-        class="form-controls"
-      />
-      <!-- <i class="fas fa-search"></i> -->
+<!-- <section class="faculty-view"> -->
+<div class="header_wrap">
+  <div class="num_rows">
+    <div class="form-group">
+      <select class="form-controls" name="state" id="maxRows">
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="70">70</option>
+        <option value="100">100</option>
+        <option value="5000">Show All Rows</option>
+      </select>
     </div>
   </div>
-  <!-- <table class="table table-borderless table-class" id= "table-id"> -->
+  <div class="tb_search">
+    <input type="text" id="search_input_all" onkeyup="FilterkeyWord_all_table()" placeholder="Search.."
+      class="form-controls" />
+    <i class="fas fa-search"></i>
+  </div>
+</div>
+<!-- <table class="table table-borderless table-class" id= "table-id"> -->
 
-  <table class="table table-responsive table-borderless" id="table-id">
-    <thead>
-      <tr>
-        <th scope="col">Student Name</th>
-        <th scope="col">College Name</th>
-        <th scope="col">Reason for OD</th>
-        <th scope="col">Duration</th>
-        <th scope="col">Authorization</th>
-        <th scope="col">Proof</th>
-        <th scope="col">View</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for (i of allRequests) { %>
-      <tr>
-        <!-- <th scope="row"><%= i.student.name %></th> -->
-        <td><%= i.student.name %></td>
-        <td><%= i.college.collegename %></td>
-        <td><%= i.eventname %></td>
-        <td>
-          <%= i.dates[0].getDate()+ "/" + (i.dates[0].getMonth()+1) + "/" +
-          i.dates[0].getFullYear() %> 
-          <% if (i.dates[1]) { %> , <%=
+<table class="table table-responsive table-hover table-borderless" id="table-id">
+  <thead>
+    <tr>
+      <th scope="col">Student Name</th>
+      <th scope="col">College Name</th>
+      <th scope="col">Reason for OD</th>
+      <th scope="col">Duration</th>
+      <th scope="col">Authorization</th>
+      <th scope="col">Proof</th>
+      <th scope="col">View</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for (i of allRequests) { %>
+    <tr>
+      <!-- <th scope="row"><%= i.student.name %></th> -->
+      <td><%= i.student.name %></td>
+      <td><%= i.collegename %></td>
+      <td><%= i.eventname %></td>
+      <td>
+        <%= i.dates[0].getDate()+ "/" + (i.dates[0].getMonth()+1) + "/" +
+          i.dates[0].getFullYear() %>
+        <% if (i.dates[1]) { %> , <%=
           i.dates[1].getDate()+ "/" + (i.dates[1].getMonth()+1) + "/" +
-          i.dates[1].getFullYear() %> <% } %> 
-          <% if (i.dates[2]) { %> , <%=
+          i.dates[1].getFullYear() %> <% } %>
+        <% if (i.dates[2]) { %> , <%=
           i.dates[2].getDate()+ "/" + (i.dates[2].getMonth()+1) + "/" +
           i.dates[2].getFullYear() %> <% } %>
-        </td>
-        <td>
-          <% if (i.applicationStatus == "pending") { %>
-          <a class="approval-btn approve" href="/faculty/approve/<%=i._id%>">
-            Approve
-          </a>
-          <a class="approval-btn reject" href="/faculty/reject/<%=i._id%>">
-            Reject
-          </a>
-          <% } else if (i.applicationStatus == "approved") { %>
-          <span class="green">Approved</span>
-          <% } else if (i.applicationStatus == "rejected") { %>
-          <span class="red">Rejected</span>
-          <% } %>
-        </td>
-        <% if (i.proofOfParticipation) { %>
-        <td class="green">Uploaded</td>
-        <% } else { %>
-        <td class="yellow">Standby</td>
+      </td>
+      <td>
+        <% if (i.applicationStatus == "pending") { %>
+        <a class="approval-btn approve" href="/faculty/approve/<%=i._id%>">
+          Approve
+        </a>
+        <a class="approval-btn reject" href="/faculty/reject/<%=i._id%>">
+          Reject
+        </a>
+        <% } else if (i.applicationStatus == "approved") { %>
+        <span class="green">Approved</span>
+        <% } else if (i.applicationStatus == "rejected") { %>
+        <span class="red">Rejected</span>
         <% } %>
-        <td><a href="/faculty/view/<%=i._id%>">More</a></td>
-      </tr>
-
+      </td>
+      <% if (i.proofOfParticipation) { %>
+      <td class="green">Uploaded</td>
+      <% } else if (i.applicationStatus == "rejected") { %>
+      <td>-</td>
+      <% } else { %>
+      <td class="yellow">Standby</td>
       <% } %>
-    </tbody>
-  </table>
+      <td><a href="/faculty/view/<%=i._id%>">More</a></td>
+    </tr>
 
-  <div class="pagination-container flex-center">
+    <% } %>
+  </tbody>
+</table>
+
+<!-- <div class="pagination-container flex-center">
     <nav>
       <ul class="pagination"></ul>
     </nav>
-  </div>
-  <!-- <div class="rows_count">Showing 11 to 20 of 91 entries</div> -->
+  </div> -->
+<div class="rows_count">Showing 11 to 20 of 91 entries</div>
 </section>

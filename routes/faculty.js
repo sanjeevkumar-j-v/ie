@@ -13,8 +13,9 @@ router.get("/", async function (req, res) {
   for (i in participations) {
     var request = {};
     request.student = await User.findById(participations[i].userId);
-    request.college = await College.findById(participations[i].collegeId);
+    // request.college = await College.findById(participations[i].collegeId);
     request._id = participations[i]._id;
+    request.collegename = participations[i].collegename;
     request.eventname = participations[i].eventname;
     request.eventtype = participations[i].eventtype;
     request.description = participations[i].description;
@@ -30,13 +31,12 @@ router.get("/view/:participationId", async function (req, res) {
   var participation = await Participation.findById(req.params.participationId);
   var request = {};
   request.student = await User.findById(participation.userId);
-  request.college = await College.findById(participation.collegeId);
+  // request.college = await College.findById(participation.collegeId);
   request._id = participation._id;
   request.eventname = participation.eventname;
   request.eventtype = participation.eventtype;
   request.description = participation.description;
-  request.fromDate = participation.fromDate;
-  request.toDate = participation.toDate;
+  request.dates = participation.dates;
   request.applicationStatus = participation.applicationStatus;
   request.proofOfParticipation = participation.proofOfParticipation;
 
