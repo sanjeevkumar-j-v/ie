@@ -16,12 +16,10 @@ router.get("/", function (req, res, next) {
   });
 });
 router.get("/request-participation", async function (req, res) {
-  var colleges = await College.find({}).sort({
-    collegename: 1
-  });
-  return res.render("requestparticipation", {
-    colleges
-  });
+  // var colleges = await College.find({}).sort({
+  //   collegename: 1
+  // });
+  return res.render("requestparticipation", {});
 });
 router.post("/request-participation", function (req, res) {
   req.body.userId = req.user._id;
@@ -37,19 +35,25 @@ router.post("/request-participation", function (req, res) {
       return;
     }
     console.log("Participation: ", participation);
-    return res.redirect("/student/activities");
+    return res.redirect("/student");
   });
 });
 router.post("/upload-proof/:participationId", function (req, res) {
   Participation.uploadedProof(req, res, function (err) {
-    console.log(">>> body: ", req.body)
+    if (err) {
+      console.log("error in uploading file: ", err);
+    }
+    if (!req.file) {
+      return res.redirect("/student");
+    }
     Participation.findByIdAndUpdate(
       req.params.participationId, {
-        proofOfParticipation: Participation.proofPath + req.file.filename
+        proofOfParticipation: Participation.proofPath + req.file.filename,
+        proofStatus: ""
       },
       function (err, participation) {
         if (err) {
-          console.log("Error on uploading prrof: ", err);
+          console.log("Error on uploading proof: ", err);
         }
         if (participation) {
           console.log("Uploaded: ", participation);

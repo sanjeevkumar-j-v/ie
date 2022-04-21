@@ -28,21 +28,27 @@ const participationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  eventlevel: {
+    type: String,
+    required: true,
+  },
   eventtype: {
     type: String,
     required: true,
   },
-  description: {
+  topicname: {
     type: String,
-    required: true,
   },
   dates: [{
     type: Date,
-  }, ],
+  },],
   applicationStatus: {
     type: String,
   },
   proofOfParticipation: {
+    type: String,
+  },
+  proofStatus: {
     type: String,
   },
 }, {
@@ -51,14 +57,13 @@ const participationSchema = new mongoose.Schema({
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "../publc", PROOF_PATH));
+    cb(null, path.join(__dirname, "../public", PROOF_PATH));
   },
   filename: function (req, file, cb) {
     cb(
       null,
-      // req.body.name
-      // +
-      //   "-" +
+      file.fieldname +
+      "-" +
       Date.now() +
       path.extname(file.originalname)
     );

@@ -24,9 +24,19 @@
     <p class="green">PROOF: Uploaded - <%= request.proofOfParticipation %></p>
     <div>
       <object data="<%= request.proofOfParticipation %>" type="application/pdf" width="300" height="400">
-        alt : <a href="<%= request.proofOfParticipation %>">test.pdf</a>
       </object>
     </div>
+    <% if (!request.proofStatus) { %>
+    <a class="approval-btn approve" href="/faculty/accept-proof/<%=request._id%>">
+      Accept Proof
+    </a>
+    <a class="approval-btn reject" href="/faculty/reject-proof/<%=request._id%>">
+      Reject Proof
+    </a>
+    <% } else { %>
+    <p>Proof: <%= request.proofStatus %></p>
+    <% } %>
+
     <% } else { %>
     <p class="yellow">PROOF: Standby</p>
     <p>EDIT APPROVAL: </p>

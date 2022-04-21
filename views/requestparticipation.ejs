@@ -12,12 +12,16 @@
       <label>Event Name</label>
     </div>
     <div class="user-box">
+      <input type="text" name="eventlevel" required>
+      <label>Event Level</label>
+    </div>
+    <div class="user-box">
       <input type="text" name="eventtype" required>
       <label>Event Type</label>
     </div>
     <div class="user-box">
-      <input type="text" name="description" required>
-      <label>Description</label>
+      <input type="text" name="topicname" required>
+      <label>Topic Name</label>
     </div>
     <label for="date1">Select Days</label>
     <div class="user-box">
@@ -39,59 +43,3 @@
     </button>
   </form>
 </div>
-
-<!-- <section class="signing-form">
-  <h1>Request participation</h1>
-
-  <form action="/student/request-participation" method="post">
-    <label for="collegename">College Name</label>
-    <select name="collegename" id="collegename">
-      <option value="">College name</option>
-      <% for (college of colleges) { %>
-      <option value="<%= college.collegename %>">
-        <%= college.collegename %>
-      </option>
-      <% } %>
-    </select>
-    <label for="collegeaddress">College Address</label>
-    <input
-      type="text"
-      name="collegeaddress"
-      id="collegeaddress"
-      placeholder="College Address"
-      required
-    />
-
-    <label for="eventname">Event Name</label>
-    <input
-      type="text"
-      id="eventname"
-      name="eventname"
-      placeholder="Event Name"
-      required
-    />
-    <label for="eventtype">Event Type</label>
-    <input
-      type="text"
-      id="eventtype"
-      name="eventtype"
-      placeholder="Event Type"
-      required
-    />
-    <label for="description">Description</label>
-    <input
-      type="text"
-      id="description"
-      name="description"
-      placeholder="Event description"
-    />
-    <label for="date1">Day 1</label>
-    <input type="date" id="date1" name="date1" placeholder="Day 1" required />
-    <label for="date2">Day 2</label>
-    <input type="date" id="date2" name="date2" placeholder="Day 2" />
-    <label for="date3">Day 3</label>
-    <input type="date" id="date3" name="date3" placeholder="Day 3" />
-
-    <input type="submit" value="submit" />
-  </form>
-</section> -->

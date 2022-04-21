@@ -70,7 +70,12 @@
         <% } %>
       </td>
       <% if (i.proofOfParticipation) { %>
-      <td class="green">Uploaded</td>
+      <td class="green">
+        Uploaded
+        <% if (i.proofStatus == "accepted") { %>
+        and Accepted
+        <% } %>
+      </td>
       <% } else if (i.applicationStatus == "rejected") { %>
       <td>-</td>
       <% } else { %>
@@ -78,7 +83,6 @@
       <% } %>
       <td><a href="/faculty/view/<%=i._id%>">More</a></td>
     </tr>
-
     <% } %>
   </tbody>
 </table>

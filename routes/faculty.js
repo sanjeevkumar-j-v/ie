@@ -6,46 +6,28 @@ var College = require("../models/college");
 
 router.get("/", async function (req, res) {
   var participations = await Participation.find({}).sort({
-    dates: 1,
+    dates: -1,
     createdAt: 1,
   });
-  var allRequests = [];
-  for (i in participations) {
-    var request = {};
-    request.student = await User.findById(participations[i].userId);
-    // request.college = await College.findById(participations[i].collegeId);
-    request._id = participations[i]._id;
-    request.collegename = participations[i].collegename;
-    request.eventname = participations[i].eventname;
-    request.eventtype = participations[i].eventtype;
-    request.description = participations[i].description;
-    request.dates = participations[i].dates;
-    request.applicationStatus = participations[i].applicationStatus;
-    request.proofOfParticipation = participations[i].proofOfParticipation;
-
-    allRequests.push(request);
+  for (participation of participations) {
+    participation.student = await User.findById(participation.userId);
   }
-  return res.render("faculty", { allRequests });
+  return res.render("faculty", {
+    allRequests: participations
+  });
 });
 router.get("/view/:participationId", async function (req, res) {
   var participation = await Participation.findById(req.params.participationId);
-  var request = {};
-  request.student = await User.findById(participation.userId);
-  // request.college = await College.findById(participation.collegeId);
-  request._id = participation._id;
-  request.eventname = participation.eventname;
-  request.eventtype = participation.eventtype;
-  request.description = participation.description;
-  request.dates = participation.dates;
-  request.applicationStatus = participation.applicationStatus;
-  request.proofOfParticipation = participation.proofOfParticipation;
-
-  return res.render("singlerequest", { request });
+  participation.student = await User.findById(participation.userId);
+  return res.render("singlerequest", {
+    request: participation
+  });
 });
 router.get("/approve/:participationId", function (req, res) {
   Participation.findByIdAndUpdate(
-    req.params.participationId,
-    { applicationStatus: "approved" },
+    req.params.participationId, {
+      applicationStatus: "approved"
+    },
     function (err, participation) {
       if (err) {
         console.log("Error on approving request: ", err);
@@ -59,11 +41,44 @@ router.get("/approve/:participationId", function (req, res) {
 });
 router.get("/reject/:participationId", function (req, res) {
   Participation.findByIdAndUpdate(
-    req.params.participationId,
-    { applicationStatus: "rejected" },
+    req.params.participationId, {
+      applicationStatus: "rejected"
+    },
     function (err, participation) {
       if (err) {
         console.log("Error on approving request: ", err);
+      }
+      if (participation) {
+        console.log("Rejected: ", participation);
+        return res.redirect("/faculty");
+      }
+    }
+  );
+});
+router.get("/accept-proof/:participationId", function (req, res) {
+  Participation.findByIdAndUpdate(
+    req.params.participationId, {
+      proofStatus: "accepted"
+    },
+    function (err, participation) {
+      if (err) {
+        console.log("Error on accepting proof: ", err);
+      }
+      if (participation) {
+        console.log("Approved: ", participation);
+        return res.redirect("/faculty/view/" + req.params.participationId);
+      }
+    }
+  );
+});
+router.get("/reject-proof/:participationId", function (req, res) {
+  Participation.findByIdAndUpdate(
+    req.params.participationId, {
+      proofStatus: "rejected"
+    },
+    function (err, participation) {
+      if (err) {
+        console.log("Error on rejecting proof: ", err);
       }
       if (participation) {
         console.log("Rejected: ", participation);

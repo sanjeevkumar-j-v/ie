@@ -3,6 +3,7 @@
 <script src="/javascripts/table.js"></script>
 
 <h1>Your Requests</h1>
+<% if (participations[0]) { %>
 <div class="header_wrap">
     <div class="tb_search search-bar">
         <input type="text" id="search_input_all" onkeyup="FilterkeyWord_all_table()" placeholder="Search.."
@@ -28,13 +29,13 @@
             <td><%= i.eventname %></td>
             <td>
                 <%= i.dates[0].getDate()+ "/" + (i.dates[0].getMonth()+1) + "/" +
-                    i.dates[0].getFullYear() %>
+                        i.dates[0].getFullYear() %>
                 <% if (i.dates[1]) { %> , <%=
-                    i.dates[1].getDate()+ "/" + (i.dates[1].getMonth()+1) + "/" +
-                    i.dates[1].getFullYear() %> <% } %>
+                        i.dates[1].getDate()+ "/" + (i.dates[1].getMonth()+1) + "/" +
+                        i.dates[1].getFullYear() %> <% } %>
                 <% if (i.dates[2]) { %> , <%=
-                    i.dates[2].getDate()+ "/" + (i.dates[2].getMonth()+1) + "/" +
-                    i.dates[2].getFullYear() %> <% } %>
+                        i.dates[2].getDate()+ "/" + (i.dates[2].getMonth()+1) + "/" +
+                        i.dates[2].getFullYear() %> <% } %>
             </td>
             <td>
                 <% if (i.applicationStatus == "pending") { %>
@@ -47,18 +48,38 @@
             </td>
             <% if (i.applicationStatus == "approved") { %>
             <% if (i.proofOfParticipation) { %>
-            <td class="green">Uploaded</td>
+            <% if (i.proofStatus == "accepted") { %>
+            <td class="green">
+                Proof Uploaded and Accepted.
+            </td>
+            <% } else if (i.proofStatus == "rejected") { %>
+            <td class="red">
+                Proof Uploaded but Rejected.
+                <form action="/student/upload-proof/<%= i._id %>" method="post" enctype="multipart/form-data">
+                    <label for="file-upload-<%= i._id %>" class="upload-btn">
+                        Upload Again
+                    </label>
+                    <input class="upload" name="proofOfParticipation" type="file" id="file-upload-<%= i._id %>"
+                        placeholder="Upload File" required onchange="getFilename(this)" />
+                    <span id="file-name"></span>
+                    <input class="upload-btn" style="display: none;" placeholder="submit" type="submit" />
+                </form>
+            </td>
+            <% } else { %>
+            <td class="yellow">
+                Proof Uploaded, yet to approve.
+            </td>
+            <% } %>
             <% } else { %>
             <td class="yellow">
                 <form action="/student/upload-proof/<%= i._id %>" method="post" enctype="multipart/form-data">
-                    <input class="upload-btn" id="upload-submit" style="display: none;" placeholder="submit"
-                        type="submit" />
-                    <label for="file-upload" class="upload-btn" id="file-upload-label">
+                    <label for="file-upload-<%= i._id %>" class="upload-btn">
                         Upload Proof
                     </label>
-                    <p id="file-name" style="display: none;"></p>
-                    <input class="upload" name="proofOfParticipation" type="file" id="file-upload" placeholder="Upload File" required
-                        onchange="getFilename(this)" />
+                    <input class="upload" name="proofOfParticipation" type="file" id="file-upload-<%= i._id %>"
+                        placeholder="Upload File" required onchange="getFilename(this)" />
+                    <span id="file-name"></span>
+                    <input class="upload-btn" style="display: none;" placeholder="submit" type="submit" />
                 </form>
             </td>
             <% } %>
@@ -72,13 +93,17 @@
         <% } %>
     </tbody>
 </table>
+<% } else { %>
+<h4>You haven't submitted any request.</h4>
+<% } %>
+
 
 <a href="/student/request-participation">Request For New Event</a>
 <script>
-    function getFilename(MyFile) {
-        document.getElementById("file-upload-label").style.display = "none";
-        document.getElementById("file-name").style.display = "block";
-        document.getElementById("upload-submit").style.display = "block";
-        document.getElementById("file-name").innerText = MyFile.files[0].name;
+    function getFilename(UploadElement) {
+        UploadElement.previousElementSibling.style.display = "none";
+        UploadElement.nextElementSibling.style.display = "block";
+        UploadElement.nextElementSibling.innerText = "Selected File: " + UploadElement.files[0].name;
+        UploadElement.nextElementSibling.nextElementSibling.style.display = "block";
     }
 </script>
