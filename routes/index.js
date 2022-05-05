@@ -7,8 +7,11 @@ var facultyRouter = require("./faculty");
 const passport = require('passport');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'IE' });
+router.get('/', function (req, res, next) {
+  res.redirect('/users/sign-in');
+  res.render('index', {
+    title: 'IE'
+  });
 });
 
 router.use("/users", usersRouter);
