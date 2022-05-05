@@ -9,13 +9,13 @@ router.get("/profile", passport.checkAuthentication, function (req, res) {
 
 router.get("/sign-up", function (req, res) {
   if(req.isAuthenticated()){
-    return res.redirect('/users/profile');
+    return res.redirect('/student');
   }
   return res.render("signup");
 });
 router.get("/sign-in", function (req, res) {
   if(req.isAuthenticated()){
-    return res.redirect('/users/profile');
+    return res.redirect('/student');
   }
   return res.render("signin");
 });
